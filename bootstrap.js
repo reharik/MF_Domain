@@ -7,4 +7,5 @@ module.exports = new Container(x=>
     x.pathToRoot(__dirname)
         .requireDirectoryRecursively('./src')
         .groupAllInDirectory('./src/AggregateRoots', 'AggregateRoots')
+        .for('core').require("git+https://github.com/reharik/MF_Infrastructure.git")
         .complete());
