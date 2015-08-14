@@ -9,7 +9,7 @@
   "author": "reharik@gmail.com",
   "license": "ISC",
   "dependencies":{
-    "dagon":"0.0.13@beta"
+    "dagon":"0.0.13"
   },
   "devDependencies": {
     "babel": "^5.5.6",
