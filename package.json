@@ -16,7 +16,7 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "mocha": "2.1.x",
-    "must": "0.13.0-beta2"
+    "must": "0.13.0-beta2",
     "domain": "git+https://github.com/reharik/MF_Domain.git"
   }
 }
