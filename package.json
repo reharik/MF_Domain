@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start":"babel-node --harmony src/index.js --stage 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "reharik@gmail.com",
