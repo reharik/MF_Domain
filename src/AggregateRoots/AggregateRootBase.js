@@ -23,9 +23,7 @@ module.exports = class AggregateRootBase {
     }
 
     applyEvent(event) {
-        var key = Object.keys(this.applyEventHandlers()).find(x = > x === event.eventTypeName
-    )
-        ;
+        var key = Object.keys(this.applyEventHandlers()).find(x => x === event.eventTypeName);
         if (key) {
             this.applyEventHandlers()[key](event);
         }
