@@ -6,6 +6,7 @@ var Trainer = require('./AggregateRoots/Trainer');
 
 module.exports = function index(options) {
     return {
+        AggregateRootBase:AggregateRootBase,
         Trainer: Trainer
     }
 };
