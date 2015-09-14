@@ -2,52 +2,52 @@
  * Created by reharik on 6/8/15.
  */
 
-var invariant = require('invariant');
+module.exports = function(invariant) {
+    return class AggregateRootBase {
+        constructor() {
+            this._id;
+            this._version          = 0;
+            this.uncommittedEvents = [];
 
-module.exports = class AggregateRootBase {
-    constructor() {
-        this._id;
-        this._version = 0;
-        this.uncommittedEvents = [];
+            invariant(
+                this.commandHandlers,
+                'An aggregateRoot requires commandHandlers'
+            );
+            invariant(
+                this.applyEventHandlers,
+                'An aggregateRoot requires applyEventHandlers'
+            );
 
-        invariant(
-            this.commandHandlers,
-            'An aggregateRoot requires commandHandlers'
-        );
-        invariant(
-            this.applyEventHandlers,
-            'An aggregateRoot requires applyEventHandlers'
-        );
-
-        Object.assign(this, this.commandHandlers());
-    }
-
-    applyEvent(event) {
-        var key = Object.keys(this.applyEventHandlers()).find(x => x === event.eventName);
-        if (key) {
-            this.applyEventHandlers()[key](event);
+            Object.assign(this, this.commandHandlers());
         }
-        this._version++;
-    }
 
-    raiseEvent(event) {
-        this.applyEvent(event);
-        this.uncommittedEvents.push(event);
-    }
+        applyEvent(event) {
+            var key = Object.keys(this.applyEventHandlers()).find(x => x === event.eventName );
+            if (key) {
+                this.applyEventHandlers()[key](event);
+            }
+            this._version++;
+        }
 
-    getUncommittedEvents() {
-        return this.uncommittedEvents;
-    }
+        raiseEvent(event) {
+            this.applyEvent(event);
+            this.uncommittedEvents.push(event);
+        }
 
-    clearUncommittedEvents() {
-        this.uncommittedEvents = [];
-    }
+        getUncommittedEvents() {
+            return this.uncommittedEvents;
+        }
 
-    static isAggregateBase() {
-        return true;
-    }
+        clearUncommittedEvents() {
+            this.uncommittedEvents = [];
+        }
 
-    isAggregateBase() {
-        return true;
+        static isAggregateBase() {
+            return true;
+        }
+
+        isAggregateBase() {
+            return true;
+        }
     }
 };

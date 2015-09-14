@@ -1,0 +1,9 @@
+plugin:
+ build: .
+ volumes:
+  - .:/home/app/current
+ command: npm test
+ environment:
+  DEBUG: true
+  NODE_ENV: development
+  APPLICATION_NAME: EventDispatcher
