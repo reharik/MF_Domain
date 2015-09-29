@@ -9,7 +9,7 @@ module.exports = function(_options) {
     return new container(x=>
         x.pathToRoot(__dirname)
             .requireDirectoryRecursively('./src')
-            .groupAllInDirectory('./src/AggregateRoots', 'AggregateRoots_hash')
+            .groupAllInDirectory('./src/AggregateRoots', 'aggregateroots')
             .for('bluebird').renameTo('Promise')
             .for('corelogger').renameTo('logger').instanciate(i=>i.asFunc().withParameters(options.logger || {}))
             .complete());
