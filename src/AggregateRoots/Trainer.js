@@ -4,7 +4,7 @@
 
 
 module.exports = function(AggregateRootBase, invariant, uuid) {
-    class Trainer extends AggregateRootBase {
+    return class Trainer extends AggregateRootBase {
         constructor() {
             super();
             var _password;
