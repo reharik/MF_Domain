@@ -11,6 +11,6 @@ module.exports = function(_options) {
             .requireDirectoryRecursively('./src')
             .groupAllInDirectory('./src/AggregateRoots', 'aggregateroots')
             .for('bluebird').renameTo('Promise')
-            .for('corelogger').renameTo('logger').instanciate(i=>i.asFunc().withParameters(options.logger || {}))
+            .for('corelogger').renameTo('logger').instantiate(i=>i.asFunc().withParameters(options.logger || {}))
             .complete());
 };
