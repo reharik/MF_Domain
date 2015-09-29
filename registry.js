@@ -10,6 +10,7 @@ module.exports = function(_options) {
         x.pathToRoot(__dirname)
             .requireDirectoryRecursively('./src')
             .groupAllInDirectory('./src/AggregateRoots', 'aggregateroots')
+            .for('eventmodels').instantiate(i=>i.asFunc())
             .for('bluebird').renameTo('Promise')
             .for('corelogger').renameTo('logger').instantiate(i=>i.asFunc().withParameters(options.logger || {}))
             .complete());

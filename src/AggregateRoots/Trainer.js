@@ -3,7 +3,7 @@
  */
 
 
-module.exports = function(AggregateRootBase, invariant, uuid) {
+module.exports = function(AggregateRootBase, eventmodels, invariant, uuid) {
     return class Trainer extends AggregateRootBase {
         constructor() {
             super();
@@ -20,7 +20,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         commandHandlers() {
             return {
                 'hireTrainer'   : function(cmd) {
-                    this.raiseEvent(new core.GesEvent('trainerHired', {
+                    this.raiseEvent(eventmodels.gesEvent('trainerHired', {
                         id         : uuid.v4(),
                         credentials: cmd.credentials,
                         contact    : cmd.contact,
@@ -32,7 +32,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                     expectNotLoggedIn();
                     expectCorrectPassword(cmd.password);
                     var token = createToken();
-                    this.raiseEvent(new core.GesEvent('trainerLoggedIn', {
+                    this.raiseEvent(eventmodels.gesEvent('trainerLoggedIn', {
                         id      : this._id,
                         userName: cmd.userName,
                         token   : token,
@@ -41,14 +41,14 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                 },
                 'archiveTrainer': function(cmd) {
                     expectNotArchived();
-                    this.raiseEvent(new core.GesEvent('trainerArchived', {
+                    this.raiseEvent(eventmodels.gesEvent('trainerArchived', {
                         id          : this._id,
                         archivedDate: new Date()
                     }));
                 },
                 'unArchiveUser' : function(cmd) {
                     expectArchived();
-                    this.raiseEvent(new core.GesEvent('trainerUnarchived', {
+                    this.raiseEvent(eventmodels.gesEvent('trainerUnarchived', {
                         id            : this._id,
                         unArchivedDate: new Date()
                     }));
