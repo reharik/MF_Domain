@@ -60,6 +60,7 @@ module.exports = function(AggregateRootBase, eventmodels, invariant, uuid) {
             return {
                 'trainerHired': function(event) {
                     this._password = event.password;
+                    this._id = event.id;
                 }.bind(this),
 
                 'userArchived': function(event) {
