@@ -1,24 +1,36 @@
 /**
- * Created by parallels on 7/21/15.
+ * Created by parallels on 7/27/15.
  */
 
-var gulp = require('gulp');
+var gulp = require("gulp");
+// Config
 var del = require('del');
+var babel = require("gulp-babel");
 
 
+var DEBUG = process.env.NODE_ENV === "development";
 
-
-gulp.task('clean', function (cb) {
-    del([
-        'output/**/*'
-    ], cb);
+gulp.task('clean', function(cb) {
+    del(['output'],{force:true}, cb);
 });
 
-
-gulp.task('publish',['clean'], function () {
-    gulp.src(['src/**/*'], { "base" : "." }).pipe(gulp.dest('output'));
+gulp.task("babel",["clean"], function () {
+    return gulp.src("app/**/*.js")
+        .pipe(babel())
+        .pipe(gulp.dest("output/app"));
 });
 
-gulp.task('default', ['clean','publish']);
+gulp.task("copy-mochaOpts",["clean", "babel"], function () {
+    return gulp.src("app/tests/mocha.opts")
+        .pipe(gulp.dest("output/app/tests/"));
+});
+
+gulp.task("copy-packageJson",["clean", "babel"], function () {
+    return gulp.src("./package.json")
+        .pipe(gulp.dest("output/"));
+});
+
+////////////////////////////////////////////////////
 
 
+gulp.task("default",['copy-mochaOpts','copy-packageJson']);
