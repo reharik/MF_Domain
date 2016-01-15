@@ -12,12 +12,12 @@
   "dependencies": {
     "JSON": "^1.0.0",
     "bluebird": "^2.9.27",
-    "dagon": "git+https://github.com/reharik/dagon.git#local",
-    "eventmodels": "git+https://github.com/reharik/core_eventmodels.git",
+    "dagon": "git://github.com/reharik/dagon.git#local",
+    "eventmodels": "git://github.com/reharik/core_eventmodels.git#functional",
     "extend": "^3.0.0",
     "invariant": "^2.1.0",
     "uuid": "^2.0.1",
-    "corelogger": "git+https://github.com/reharik/core_logger.git"
+    "corelogger": "git://github.com/reharik/core_logger.git"
   },
   "devDependencies": {
     "babel": "^5.5.6",
