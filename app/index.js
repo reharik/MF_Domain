@@ -12,7 +12,6 @@ module.exports = function(_options) {
         }
     };
     extend(options, _options || {});
-    var container = registry(options);
-    return container.getHashOfGroup('aggregateroots');
+    return  registry(options);
 };
 
