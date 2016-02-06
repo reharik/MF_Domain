@@ -3,7 +3,7 @@
  */
 
 
-module.exports = function(AggregateRootBase, eventmodels, invariant, uuid) {
+module.exports = function(AggregateRootBase, invariant, uuid) {
     return class Trainer extends AggregateRootBase {
         constructor() {
             super();
@@ -20,38 +20,50 @@ module.exports = function(AggregateRootBase, eventmodels, invariant, uuid) {
         commandHandlers() {
             return {
                 'hireTrainer'   : function(cmd) {
-                    this.raiseEvent(eventmodels.gesEvent('trainerHired', {
-                        id         : uuid.v4(),
-                        credentials: cmd.credentials,
-                        contact    : cmd.contact,
-                        address    : cmd.address,
-                        dob        : cmd.dob
-                    }));
+                    this.raiseEvent({
+                        eventName: 'trainerHired',
+                        data     : {
+                            id         : uuid.v4(),
+                            credentials: cmd.credentials,
+                            contact    : cmd.contact,
+                            address    : cmd.address,
+                            dob        : cmd.dob
+                        }
+                    });
                 },
                 'loginTrainer'  : function(cmd) {
                     expectNotLoggedIn();
                     expectCorrectPassword(cmd.password);
                     var token = createToken();
-                    this.raiseEvent(eventmodels.gesEvent('trainerLoggedIn', {
-                        id      : this._id,
-                        userName: cmd.userName,
-                        token   : token,
-                        created : new Date()
-                    }));
+                    this.raiseEvent({
+                        eventName: 'trainerLoggedIn',
+                        data     : {
+                            id      : this._id,
+                            userName: cmd.userName,
+                            token   : token,
+                            created : new Date()
+                        }
+                    });
                 },
                 'archiveTrainer': function(cmd) {
                     expectNotArchived();
-                    this.raiseEvent(eventmodels.gesEvent('trainerArchived', {
-                        id          : this._id,
-                        archivedDate: new Date()
-                    }));
+                    this.raiseEvent({
+                        eventName: 'trainerArchived',
+                        data     : {
+                            id          : this._id,
+                            archivedDate: new Date()
+                        }
+                    });
                 },
                 'unArchiveUser' : function(cmd) {
                     expectArchived();
-                    this.raiseEvent(eventmodels.gesEvent('trainerUnarchived', {
-                        id            : this._id,
-                        unArchivedDate: new Date()
-                    }));
+                    this.raiseEvent({
+                        eventName: 'trainerUnarchived',
+                        data     : {
+                            id            : this._id,
+                            unArchivedDate: new Date()
+                        }
+                    });
                 }
             }
         }
@@ -59,8 +71,8 @@ module.exports = function(AggregateRootBase, eventmodels, invariant, uuid) {
         applyEventHandlers() {
             return {
                 'trainerHired': function(event) {
-                    this._password = event.password;
-                    this._id = event.id;
+                    this._password = event.data.password;
+                    this._id       = event.data.id;
                 }.bind(this),
 
                 'userArchived': function(event) {
