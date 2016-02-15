@@ -2,6 +2,8 @@
  * Created by reharik on 6/8/15.
  */
 
+"use strict";
+
 module.exports = function(invariant) {
     return class AggregateRootBase {
         constructor() {

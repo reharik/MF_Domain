@@ -1,7 +1,7 @@
 /**
  * Created by rharik on 7/13/15.
  */
-
+"use strict";
 
 module.exports = function(AggregateRootBase, invariant, uuid) {
     return class Trainer extends AggregateRootBase {
