@@ -21,8 +21,8 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
             return {
                 'hireTrainer'   : function(cmd) {
                     this.raiseEvent({
-                        eventName: 'trainerHired',
-                        data     : {
+                        eventName     : 'trainerHired',
+                        data          : {
                             id         : uuid.v4(),
                             credentials: cmd.credentials,
                             contact    : cmd.contact,
