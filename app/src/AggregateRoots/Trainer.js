@@ -26,8 +26,9 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                             id         : uuid.v4(),
                             credentials: cmd.credentials,
                             contact    : cmd.contact,
-                            address    : cmd.address,
-                            dob        : cmd.dob
+                            dob        : cmd.dob,
+                            color      : cmd.color,
+                            defaultClientRate : cmd.defaultClientRate
                         }
                     });
                 },
