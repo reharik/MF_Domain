@@ -32,6 +32,19 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                         }
                     });
                 },
+                'updateTrainerInfo'   : function(cmd) {
+                    this.raiseEvent({
+                        eventName     : 'trainerInfoUpdated',
+                        data          : {
+                            id         : cmd.id,
+                            credentials: cmd.credentials,
+                            contact    : cmd.contact,
+                            dob        : cmd.dob,
+                            color      : cmd.color,
+                            defaultClientRate : cmd.defaultClientRate
+                        }
+                    });
+                },
                 'loginTrainer'  : function(cmd) {
                     expectNotLoggedIn();
                     expectCorrectPassword(cmd.password);
@@ -74,6 +87,10 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                 'trainerHired': function(event) {
                     this._password = event.data.password;
                     this._id       = event.data.id;
+                }.bind(this),
+
+                'trainerInfoUpdated': function(event) {
+                    this._password = event.data.password;
                 }.bind(this),
 
                 'userArchived': function(event) {
