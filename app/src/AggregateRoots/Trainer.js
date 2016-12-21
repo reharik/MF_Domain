@@ -27,24 +27,39 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                             credentials: cmd.credentials,
                             contact    : cmd.contact,
                             dob        : cmd.dob,
-                            color      : cmd.color,
-                            defaultClientRate : cmd.defaultClientRate
+                            color      : cmd.color
                         }
                     });
                 },
                 'updateTrainerInfo'   : function(cmd) {
+                    this.expectNotArchived();
                     this.raiseEvent({
                         eventName     : 'trainerInfoUpdated',
-                        data          : {
-                            id         : cmd.id,
-                            credentials: cmd.credentials,
-                            contact    : cmd.contact,
-                            dob        : cmd.dob,
-                            color      : cmd.color,
-                            defaultClientRate : cmd.defaultClientRate
-                        }
+                        data          : cmd
                     });
                 },
+                'updateTrainerContact'   : function(cmd) {
+                    this.expectNotArchived();
+                    this.raiseEvent({
+                        eventName     : 'trainerContactUpdated',
+                        data          : cmd
+                    });
+                },
+                'updateTrainerAddress'   : function(cmd) {
+                    this.expectNotArchived();
+                    this.raiseEvent({
+                        eventName     : 'trainerAddressUpdated',
+                        data          : cmd
+                    });
+                },
+                'updateTrainerPassword'   : function(cmd) {
+                    this.expectNotArchived();
+                    this.raiseEvent({
+                        eventName     : 'trainerPasswordUpdated',
+                        data          : cmd
+                    });
+                },
+
                 'loginTrainer'  : function(cmd) {
                     expectNotLoggedIn();
                     expectCorrectPassword(cmd.password);
@@ -89,7 +104,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                     this._id       = event.data.id;
                 }.bind(this),
 
-                'trainerInfoUpdated': function(event) {
+                'trainerPasswordUpdated': function(event) {
                     this._password = event.data.password;
                 }.bind(this),
 
