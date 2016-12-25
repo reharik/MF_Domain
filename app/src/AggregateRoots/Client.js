@@ -87,13 +87,11 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         }
 
         expectNotArchived() {
-            invariant(!this._isArchived,
-                new Error('Client already archived'));
+            invariant(!this._isArchived, 'Client already archived');
         }
 
         expectArchived() {
-            invariant(this._isArchived,
-                new Error('Client is not archived archived'));
+            invariant(this._isArchived, 'Client is not archived archived');
         }
     }
 };

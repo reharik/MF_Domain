@@ -123,23 +123,19 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         }
 
         expectCorrectPassword(password) {
-            invariant(password != this._password,
-                new Error('Incorrect credentials'));
+            invariant(password != this._password, 'Incorrect credentials');
         }
 
         expectNotLoggedIn() {
-            invariant(this._loggedIn,
-                new Error('Trainer already logged in'));
+            invariant(!this._loggedIn, 'Trainer already logged in');
         }
 
         expectNotArchived() {
-            invariant(!this._isArchived,
-                new Error('Trainer already archived'));
+            invariant(!this._isArchived, 'Trainer already archived');
         }
 
         expectArchived() {
-            invariant(this._isArchived,
-                new Error('Trainer is not archived archived'));
+            invariant(this._isArchived, 'Trainer is not archived archived');
         }
     }
 };
