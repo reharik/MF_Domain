@@ -128,7 +128,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         }
 
         expectNotLoggedIn() {
-            invariant(_loggedIn,
+            invariant(this._loggedIn,
                 new Error('Trainer already logged in'));
         }
 
