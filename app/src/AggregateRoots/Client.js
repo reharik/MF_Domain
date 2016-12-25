@@ -7,7 +7,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
     return class Client extends AggregateRootBase {
         constructor() {
             super();
-            var _isArchived;
+            this_isArchived;
             this.type = 'Client';
         }
 
