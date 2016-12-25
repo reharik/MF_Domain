@@ -123,7 +123,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         }
 
         expectCorrectPassword(password) {
-            invariant(password != this._password, 'Incorrect credentials');
+            invariant(password === this._password, 'Incorrect credentials');
         }
 
         expectNotLoggedIn() {
