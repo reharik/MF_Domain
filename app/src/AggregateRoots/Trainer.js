@@ -133,16 +133,12 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         }
 
         expectNotArchived() {
-            console.log('==========this._isArchived=========');
-            console.log(this._isArchived);
-            console.log('==========END this._isArchived=========');
-
-            invariant(this._isArchived,
+            invariant(!this._isArchived,
                 new Error('Trainer already archived'));
         }
 
         expectArchived() {
-            invariant(!this._isArchived,
+            invariant(this._isArchived,
                 new Error('Trainer is not archived archived'));
         }
     }
