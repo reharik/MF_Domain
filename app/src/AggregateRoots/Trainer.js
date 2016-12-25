@@ -63,7 +63,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                 'loginTrainer'  : function(cmd) {
                     this.expectNotLoggedIn();
                     this.expectCorrectPassword(cmd.password);
-                    var token = createToken();
+                    var token = this.createToken();
                     this.raiseEvent({
                         eventName: 'trainerLoggedIn',
                         data     : {
