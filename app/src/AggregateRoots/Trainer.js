@@ -8,8 +8,8 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         constructor() {
             super();
             var _password;
-            var _loggedIn;
-            var _isArchived;
+            var _loggedIn = false;
+            var _isArchived = false;
             this.type = 'Trainer';
         }
 
@@ -61,8 +61,8 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                 },
 
                 'loginTrainer'  : function(cmd) {
-                    expectNotLoggedIn();
-                    expectCorrectPassword(cmd.password);
+                    this.expectNotLoggedIn();
+                    this.expectCorrectPassword(cmd.password);
                     var token = createToken();
                     this.raiseEvent({
                         eventName: 'trainerLoggedIn',
@@ -75,7 +75,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                     });
                 },
                 'archiveTrainer': function(cmd) {
-                    expectNotArchived();
+                    this.expectNotArchived();
                     this.raiseEvent({
                         eventName: 'trainerArchived',
                         data     : {
@@ -85,7 +85,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                     });
                 },
                 'unArchiveUser' : function(cmd) {
-                    expectArchived();
+                    this.expectArchived();
                     this.raiseEvent({
                         eventName: 'trainerUnarchived',
                         data     : {
@@ -136,7 +136,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
             console.log('==========this._isArchived=========');
             console.log(this._isArchived);
             console.log('==========END this._isArchived=========');
-            
+
             invariant(this._isArchived,
                 new Error('Trainer already archived'));
         }
