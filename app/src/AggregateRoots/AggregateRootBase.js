@@ -24,9 +24,20 @@ module.exports = function(invariant) {
         }
 
         applyEvent(event) {
-            var key = Object.keys(this.applyEventHandlers()).find(x => x === event.eventName );
+        console.log('==========event in apply event agg root=========');
+        console.log(event);
+        console.log('==========END event=========');
+            var eventHandlers = this.applyEventHandlers();
+            var key = Object.keys(eventHandlers).find(x => x === event.eventName );
             if (key) {
-                this.applyEventHandlers()[key](event);
+                console.log('==========key=========');
+                console.log(key);
+                console.log('==========END key=========');
+                console.log('==========this.applyEventHandlers()=========');
+                console.log(eventHandlers);
+                console.log('==========END this.applyEventHandlers()=========');
+
+                eventHandlers[key](event);
             }
             this._version++;
         }
