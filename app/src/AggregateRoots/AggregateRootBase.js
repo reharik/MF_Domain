@@ -8,7 +8,7 @@ module.exports = function(invariant) {
     return class AggregateRootBase {
         constructor() {
             this._id;
-            this._version          = 0;
+            this._version          = -1; // corresponds to ExpectedEvent.NoStream
             this.uncommittedEvents = [];
 
             invariant(
