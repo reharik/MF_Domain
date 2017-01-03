@@ -93,6 +93,13 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                             unArchivedDate: new Date()
                         }
                     });
+                },
+                'updateTrainersClients' : function(cmd) {
+                    this.expectNotArchived();
+                    this.raiseEvent({
+                        eventName     : 'trainersClientsUpdated',
+                        data          : cmd
+                    });
                 }
             }
         }
@@ -100,10 +107,6 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         applyEventHandlers() {
             return {
                 'trainerHired': function(event) {
-                    console.log('==========event=========');
-                    console.log(event);
-                    console.log('==========END event=========');
-
                     this._password = event.data.password;
                     this._id       = event.data.id;
                 }.bind(this),
