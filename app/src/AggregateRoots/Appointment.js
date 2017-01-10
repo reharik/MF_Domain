@@ -53,7 +53,7 @@ module.exports = function (AggregateRootBase, invariant, uuid, moment, moment_ra
     }
 
     expectAppointmentDurationCorrect() {
-      var range = moment_range(moment(this.startTime), moment(this.endTime));
+      var range = moment.range(moment(this.startTime), moment(this.endTime));
       switch (this.appointmentType) {
         case 'halfHour':
         {
