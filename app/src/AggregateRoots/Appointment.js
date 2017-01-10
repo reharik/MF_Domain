@@ -1,4 +1,4 @@
-module.exports = function (AggregateRootBase, invariant, uuid, moment, moment_range) {
+module.exports = function (AggregateRootBase, invariant, uuid, moment, momentrange) {
 
   return class Appointment extends AggregateRootBase {
     constructor() {
