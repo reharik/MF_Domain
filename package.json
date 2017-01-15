@@ -4,7 +4,7 @@
   "description": "",
   "main": "app/index.js",
   "scripts": {
-    "start":"babel-node --harmony src/index.js --stage 0",
+    "start": "babel-node --harmony src/index.js --stage 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "reharik@gmail.com",
@@ -12,11 +12,13 @@
   "dependencies": {
     "JSON": "^1.0.0",
     "bluebird": "^3.4.1",
+    "corelogger": "git://github.com/reharik/core_logger.git",
     "dagon": "git://github.com/reharik/dagon.git",
     "extend": "^3.0.0",
     "invariant": "^2.1.0",
-    "uuid": "^2.0.1",
-    "corelogger": "git://github.com/reharik/core_logger.git"
+    "moment": "^2.17.1",
+    "moment-range": "^3.0.0-0",
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
     "babel": "^5.5.6",
@@ -26,6 +28,5 @@
     "gulp-babel": "^5.1.0",
     "mocha": "2.1.x",
     "must": "0.13.0-beta2"
-
   }
 }
