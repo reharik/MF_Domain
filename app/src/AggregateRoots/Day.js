@@ -21,24 +21,24 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         commandHandlers() {
             return {
                 'scheduleAppointment': function (cmd) {
-                    this.expectEndTimeAfterStart(cmd.appt);
-                    this.expectAppointmentDurationCorrect(cmd.appt);
-                    this.expectCorrectNumberOfClients(cmd.appt);
-                    this.expectTrainerNotConflicting(cmd.appt);
-                    this.expectClientsNotConflicting(cmd.appt);
+                    this.expectEndTimeAfterStart(cmd);
+                    this.expectAppointmentDurationCorrect(cmd);
+                    this.expectCorrectNumberOfClients(cmd);
+                    this.expectTrainerNotConflicting(cmd);
+                    this.expectClientsNotConflicting(cmd);
 
                     this.raiseEvent({
                         eventName: 'appointmentScheduled',
                         data: {
                             id: uuid.v4(),
-                            appointmentType: cmd.appt.appointmentType,
-                            date: cmd.appt.date,
-                            startTime: cmd.appt.startTime,
-                            endTime: cmd.appt.endTime,
-                            trainer: cmd.appt.trainer,
-                            trainerName: cmd.appt.trainerName,
-                            clients: cmd.appt.clients,
-                            notes: cmd.appt.notes,
+                            appointmentType: cmd.appointmentType,
+                            date: cmd.date,
+                            startTime: cmd.startTime,
+                            endTime: cmd.endTime,
+                            trainer: cmd.trainer,
+                            trainerName: cmd.trainerName,
+                            clients: cmd.clients,
+                            notes: cmd.notes,
                             localDate: cmd.id
                         }
                     });
