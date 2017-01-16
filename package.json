@@ -17,7 +17,6 @@
     "extend": "^3.0.0",
     "invariant": "^2.1.0",
     "moment": "^2.17.1",
-    "moment-range": "^3.0.0-0",
     "uuid": "^2.0.1"
   },
   "devDependencies": {

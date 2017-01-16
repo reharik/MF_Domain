@@ -1,4 +1,4 @@
-module.exports = function (AggregateRootBase, invariant, uuid, moment, momentrange) {
+module.exports = function (AggregateRootBase, invariant, uuid, moment) {
 
   return class Appointment extends AggregateRootBase {
     constructor() {
@@ -53,23 +53,23 @@ module.exports = function (AggregateRootBase, invariant, uuid, moment, momentran
     }
 
     expectAppointmentDurationCorrect() {
-      var range = moment.range(moment(this.startTime), moment(this.endTime));
+      var diff = moment(this.startTime).diff(moment(this.endTime), 'minutes');
       switch (this.appointmentType) {
         case 'halfHour':
         {
-          invariant(range.diff('minutes') != 30,
+          invariant(diff != 30,
             'Given the Appointment Type of Half Hour the start time must be 30 minutes after the end time');
           break;
         }
         case 'fullHour':
         {
-          invariant(range.diff('minutes') != 60,
+          invariant(diff != 60,
             'Given the Appointment Type of Full Hour the start time must be 60 minutes after the end time');
           break;
         }
         case 'pair':
         {
-          invariant(range.diff('minutes') != 60,
+          invariant(diff != 60,
             'Given the Appointment Type of Pair the start time must be 60 minutes after the end time');
           break;
         }
