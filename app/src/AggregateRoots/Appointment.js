@@ -21,13 +21,14 @@ module.exports = function (AggregateRootBase, invariant, uuid, moment) {
             eventName: 'appointmentScheduled',
             data: {
               id: uuid.v4(),
-              appointmentType: cmd.appointmentType,
-              date: cmd.date,
-              startTime: cmd.startTime,
-              endTime: cmd.endTime,
-              trainer: cmd.trainer,
-              clients: cmd.clients,
-              notes: cmd.notes
+              appointmentType: cmd.appt.appointmentType,
+              date: cmd.appt.date,
+              startTime: cmd.appt.startTime,
+              endTime: cmd.appt.endTime,
+              trainer: cmd.appt.trainer,
+              clients: cmd.appt.clients,
+              notes: cmd.appt.notes,
+              localDate: cmd.id
             }
           });
         }
@@ -48,7 +49,7 @@ module.exports = function (AggregateRootBase, invariant, uuid, moment) {
     }
 
     expectEndTimeAfterStart() {
-      invariant(moment(this.startTime).after(moment(this.endTime))
+      invariant(moment(this.startTime).isAfter(moment(this.endTime))
         , 'Appointment End Time must be after Appointment Start Time');
     }
 
