@@ -49,6 +49,9 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         applyEventHandlers() {
             return {
                 'appointmentScheduled': function (event) {
+                    console.log('==========this._id=========');
+                    console.log(this._id);
+                    console.log('==========END this._id=========');
                     if(!this._id){
                         this._id = event.localDate;
                     }
