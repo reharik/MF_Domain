@@ -62,11 +62,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         }
 
         expectEndTimeAfterStart(cmd) {
-            invariant(moment(cmd.startTime).isAfter(moment(cmd.endTime))
-                , 'Appointment End Time must be after Appointment Start Time');
-        }
-
-        expectAppointmentDurationCorrect(cmd) {
             console.log('==========cmd=========');
             console.log(cmd);
             console.log('==========END cmd=========');
@@ -77,6 +72,12 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             console.log('==========diff=========');
             console.log(diff);
             console.log('==========END diff=========');
+
+            invariant(moment(cmd.startTime).isAfter(moment(cmd.endTime))
+                , 'Appointment End Time must be after Appointment Start Time');
+        }
+
+        expectAppointmentDurationCorrect(cmd) {
             switch (cmd.appointmentType) {
                 case 'halfHour':
                 {
