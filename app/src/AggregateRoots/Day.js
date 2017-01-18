@@ -53,6 +53,9 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                     console.log(this._id);
                     console.log('==========END this._id=========');
                     if(!this._id){
+                        console.log('==========event.localDate=========');
+                        console.log(event.localDate);
+                        console.log('==========END event.localDate=========');
                         this._id = event.localDate;
                     }
                     this.appointments.push({
