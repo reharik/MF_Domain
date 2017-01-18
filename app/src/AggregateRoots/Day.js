@@ -62,6 +62,13 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         }
 
         expectEndTimeAfterStart(cmd) {
+            console.log('==========cmd=========');
+            console.log(cmd);
+            console.log('==========END cmd=========');
+            console.log('==========moment(cmd.endTime).isAfter(moment(cmd.startTime))=========');
+            console.log(moment(cmd.endTime).isAfter(moment(cmd.startTime)));
+            console.log('==========END moment(cmd.endTime).isAfter(moment(cmd.startTime))=========');
+            
             invariant(moment(cmd.endTime).isAfter(moment(cmd.startTime))
               , 'Appointment End Time must be after Appointment Start Time');
         }
