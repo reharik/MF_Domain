@@ -39,7 +39,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                             trainerName: cmd.trainerName,
                             clients: cmd.clients,
                             notes: cmd.notes,
-                            localDate: cmd.id
+                            localDate: cmd.entityName
                         }
                     });
                 }.bind(this)
@@ -49,6 +49,9 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         applyEventHandlers() {
             return {
                 'appointmentScheduled': function (event) {
+                    if(!this._id){
+                        this._id = event.localDate;
+                    }
                     this.appointments.push({
                         id: event.id,
                         appointmentType: event.appointmentType,
@@ -120,7 +123,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes')
                 || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'))
                 .filter( x=> x.trainer.id === cmd.trainer.id);
-            invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0].id} 
+            invariant(trainerConflict.length < 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0].id} 
                 for this trainer: ${cmd.trainer}.`);
         }
 
@@ -129,7 +132,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes')
             || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'))
                 .filter(x => x.clients.some(c => cmd.clients.some(c2 => c.id === c2.id)));
-            invariant(clientConflicts.length <= 0, `New Appointment conflicts with this Appointment: ${clientConflicts[0].id} 
+            invariant(clientConflicts.length < 0, `New Appointment conflicts with this Appointment: ${clientConflicts[0].id} 
                 for at least one client.`);
         }
     }
