@@ -62,40 +62,28 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         }
 
         expectEndTimeAfterStart(cmd) {
-            console.log('==========cmd=========');
-            console.log(cmd);
-            console.log('==========END cmd=========');
-            console.log('==========moment(cmd.startTime).diff(moment(cmd.endTime), )=========');
-            console.log(moment(cmd.startTime).diff(moment(cmd.endTime), 'minutes'));
-            console.log('==========END moment(cmd.startTime).diff(moment(cmd.endTime), )=========');
-            var diff = moment(cmd.endTime).diff(moment(cmd.startTime), 'minutes');
-            console.log('==========diff=========');
-            console.log(diff);
-            console.log('==========END diff=========');
-
             invariant(moment(cmd.endTime).isAfter(moment(cmd.startTime))
-                , 'Appointment End Time must be after Appointment Start Time');
+              , 'Appointment End Time must be after Appointment Start Time');
         }
 
         expectAppointmentDurationCorrect(cmd) {
-
             var diff = moment(cmd.endTime).diff(moment(cmd.startTime), 'minutes');
             switch (cmd.appointmentType) {
                 case 'halfHour':
                 {
-                    invariant(diff != 30,
+                    invariant(diff === 30,
                         'Given the Appointment Type of Half Hour the start time must be 30 minutes after the end time');
                     break;
                 }
                 case 'fullHour':
                 {
-                    invariant(diff != 60,
+                    invariant(diff === 60,
                         'Given the Appointment Type of Full Hour the start time must be 60 minutes after the end time');
                     break;
                 }
                 case 'pair':
                 {
-                    invariant(diff != 60,
+                    invariant(diff === 60,
                         'Given the Appointment Type of Pair the start time must be 60 minutes after the end time');
                     break;
                 }
@@ -107,13 +95,13 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 case 'halfHour':
                 case 'fullHour':
                 {
-                    invariant(!cmd.clients || cmd.clients.length != 1,
+                    invariant(cmd.clients && cmd.clients.length === 1,
                         `Given the Appointment Type of ${cmd.appointmentType} you must have 1 and only 1 client assigned`);
                     break;
                 }
                 case 'pair':
                 {
-                    invariant(!cmd.clients || cmd.clients.length <= 1,
+                    invariant(cmd.clients && cmd.clients.length >= 2,
                         `Given the Appointment Type of Pair you must have 2 or more clients assigned`);
                     break;
                 }
@@ -125,7 +113,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes')
                 || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'))
                 .filter(x.trainer.id === cmd.trainer.id);
-            invariant(trainerConflict.length > 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0].id} 
+            invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0].id} 
                 for this trainer: ${cmd.trainer}.`);
         }
 
@@ -134,7 +122,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes')
             || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'))
                 .filter(x => x.clients.some(c => cmd.clients.some(c2 => c.id === c2.id)));
-            invariant(clientConflicts.length > 0, `New Appointment conflicts with this Appointment: ${clientConflicts[0].id} 
+            invariant(clientConflicts.length <= 0, `New Appointment conflicts with this Appointment: ${clientConflicts[0].id} 
                 for at least one client.`);
         }
     }
