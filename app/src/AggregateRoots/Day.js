@@ -54,7 +54,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                     console.log('==========END this._id=========');
                     if(!this._id){
                         console.log('==========event.localDate=========');
-                        console.log(event.localDate);
+                        console.log(event);
                         console.log('==========END event.localDate=========');
                         this._id = event.localDate;
                     }
