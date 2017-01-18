@@ -67,7 +67,16 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         }
 
         expectAppointmentDurationCorrect(cmd) {
+            console.log('==========cmd=========');
+            console.log(cmd);
+            console.log('==========END cmd=========');
+            console.log('==========moment(cmd.startTime).diff(moment(cmd.endTime), )=========');
+            console.log(moment(cmd.startTime).diff(moment(cmd.endTime), 'minutes'));
+            console.log('==========END moment(cmd.startTime).diff(moment(cmd.endTime), )=========');
             var diff = moment(cmd.startTime).diff(moment(cmd.endTime), 'minutes');
+            console.log('==========diff=========');
+            console.log(diff);
+            console.log('==========END diff=========');
             switch (cmd.appointmentType) {
                 case 'halfHour':
                 {
