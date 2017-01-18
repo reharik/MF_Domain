@@ -1,4 +1,4 @@
-module.exports = function(AggregateRootBase, invariant, uuid) {
+module.exports = function(AggregateRootBase, invariant, uuid, moment) {
     return class Day extends AggregateRootBase {
         constructor() {
             super();
