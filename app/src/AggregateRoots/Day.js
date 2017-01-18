@@ -65,13 +65,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         }
 
         expectEndTimeAfterStart(cmd) {
-            console.log('==========cmd=========');
-            console.log(cmd);
-            console.log('==========END cmd=========');
-            console.log('==========moment(cmd.endTime).isAfter(moment(cmd.startTime))=========');
-            console.log(moment(cmd.endTime).isAfter(moment(cmd.startTime)));
-            console.log('==========END moment(cmd.endTime).isAfter(moment(cmd.startTime))=========');
-            
             invariant(moment(cmd.endTime).isAfter(moment(cmd.startTime))
               , 'Appointment End Time must be after Appointment Start Time');
         }
@@ -123,10 +116,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes')
                 || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'))
                 .filter( x=> x.trainer.id === cmd.trainer.id);
-            console.log('==========trainerConflict=========');
-            console.log(trainerConflict);
-            console.log(trainerConflict.length <= 0);
-            console.log('==========END trainerConflict=========');
             invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0] && trainerConflict[0].id} 
                 for this trainer: ${cmd.trainer}.`);
         }
@@ -136,11 +125,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes')
             || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'))
                 .filter(x => x.clients.some(c => cmd.clients.some(c2 => c.id === c2.id)));
-            console.log('==========clientConflicts=========');
-            console.log(clientConflicts);
-            console.log(clientConflicts.length <= 0);
-            console.log('==========END clientConflicts=========');
-            invariant(clientConflicts.length <= 0, `New Appointment conflicts with this Appointment: ${clientConflicts[0].id} 
+            invariant(clientConflicts.length <= 0, `New Appointment conflicts with this Appointment: ${clientConflicts[0] && clientConflicts[0].id} 
                 for at least one client.`);
         }
     }
