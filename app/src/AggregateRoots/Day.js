@@ -49,22 +49,16 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         applyEventHandlers() {
             return {
                 'appointmentScheduled': function (event) {
-                    console.log('==========this._id=========');
-                    console.log(this._id);
-                    console.log('==========END this._id=========');
                     if(!this._id){
-                        console.log('==========event.localDate=========');
-                        console.log(event);
-                        console.log('==========END event.localDate=========');
-                        this._id = event.localDate;
+                        this._id = event.data.localDate;
                     }
                     this.appointments.push({
-                        id: event.id,
-                        appointmentType: event.appointmentType,
-                        startTime: event.startTime,
-                        endTime: event.endTime,
-                        trainer: event.trainer,
-                        clients: event.clients
+                        id: event.data.id,
+                        appointmentType: event.data.appointmentType,
+                        startTime: event.data.startTime,
+                        endTime: event.data.endTime,
+                        trainer: event.data.trainer,
+                        clients: event.data.clients
                     });
                 }.bind(this)
             }
