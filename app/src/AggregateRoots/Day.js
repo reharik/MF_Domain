@@ -127,7 +127,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             console.log(trainerConflict);
             console.log(trainerConflict.length <= 0);
             console.log('==========END trainerConflict=========');
-            invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0].id} 
+            invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0] && trainerConflict[0].id} 
                 for this trainer: ${cmd.trainer}.`);
         }
 
@@ -136,6 +136,10 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes')
             || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'))
                 .filter(x => x.clients.some(c => cmd.clients.some(c2 => c.id === c2.id)));
+            console.log('==========clientConflicts=========');
+            console.log(clientConflicts);
+            console.log(clientConflicts.length <= 0);
+            console.log('==========END clientConflicts=========');
             invariant(clientConflicts.length <= 0, `New Appointment conflicts with this Appointment: ${clientConflicts[0].id} 
                 for at least one client.`);
         }
