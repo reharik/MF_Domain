@@ -112,10 +112,16 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         }
 
         expectTrainerNotConflicting(cmd) {
+            console.log(`==========this.appointments=========`);
+            console.log(this.appointments);
+            console.log(`==========END this.appointments=========`);
             var trainerConflict = this.appointments.filter(x=>
                 moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes')
                 || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'))
                 .filter( x=> x.trainer.id === cmd.trainer.id);
+            console.log(`==========trainerConflicts=========`);
+            console.log(trainerConflicts);
+            console.log(`==========END trainerConflicts=========`);
             invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0] && trainerConflict[0].id} 
                 for this trainer: ${cmd.trainer}.`);
         }
