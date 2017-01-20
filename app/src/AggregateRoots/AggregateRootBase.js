@@ -4,10 +4,9 @@
 
 "use strict";
 
-module.exports = function(invariant) {
+module.exports = function(invariant, logger) {
     return class AggregateRootBase {
         constructor() {
-            this._id;
             this._version          = -1; // corresponds to ExpectedEvent.NoStream
             this.uncommittedEvents = [];
 
@@ -24,19 +23,11 @@ module.exports = function(invariant) {
         }
 
         applyEvent(event) {
-        console.log('==========event in apply event agg root=========');
-        console.log(event);
-        console.log('==========END event=========');
+            logger.debug(`event currently in applyEvent`);
+            logger.debug(event);
             var eventHandlers = this.applyEventHandlers();
             var key = Object.keys(eventHandlers).find(x => x === event.eventName );
             if (key) {
-                console.log('==========key=========');
-                console.log(key);
-                console.log('==========END key=========');
-                console.log('==========this.applyEventHandlers()=========');
-                console.log(eventHandlers);
-                console.log('==========END this.applyEventHandlers()=========');
-
                 eventHandlers[key](event);
             }
             this._version++;
