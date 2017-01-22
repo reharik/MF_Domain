@@ -78,6 +78,9 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             }.bind(this);
 
             return {
+                'scheduleAppointment': function(cmd) {
+                    scheduleAppointment(cmd);
+                },
                 'rescheduleAppointmentToNewDay': function(cmd) {
                     if(this._id === cmd.originalEntityName){
                         _cancelAppointment(cmd);
