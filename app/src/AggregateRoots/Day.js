@@ -19,50 +19,173 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         }
 
         commandHandlers() {
-            return {
-                'scheduleAppointment': function (cmd) {
-                    this.expectEndTimeAfterStart(cmd);
-                    this.expectAppointmentDurationCorrect(cmd);
-                    this.expectCorrectNumberOfClients(cmd);
-                    this.expectTrainerNotConflicting(cmd);
-                    this.expectClientsNotConflicting(cmd);
+            const updateAppointment = function(cmd) {
+                this.expectEndTimeAfterStart(cmd);
+                this.expectAppointmentDurationCorrect(cmd);
+                this.expectCorrectNumberOfClients(cmd);
+                this.expectTrainerNotConflicting(cmd);
+                this.expectClientsNotConflicting(cmd);
 
-                    this.raiseEvent({
-                        eventName: 'appointmentScheduled',
-                        data: {
-                            id: uuid.v4(),
-                            appointmentType: cmd.appointmentType,
-                            date: cmd.date,
-                            startTime: cmd.startTime,
-                            endTime: cmd.endTime,
-                            trainer: cmd.trainer,
-                            trainerName: cmd.trainerName,
-                            clients: cmd.clients,
-                            notes: cmd.notes,
-                            localDate: cmd.entityName
-                        }
-                    });
-                }.bind(this)
+                this.raiseEvent({
+                    eventName: this.mapCommandToEvent(cmd),
+                    data: {
+                        id: cmd.id,
+                        appointmentType: cmd.appointmentType,
+                        date: cmd.date,
+                        startTime: cmd.startTime,
+                        endTime: cmd.endTime,
+                        trainer: cmd.trainer,
+                        trainerName: cmd.trainerName,
+                        clients: cmd.clients,
+                        notes: cmd.notes,
+                        localDate: cmd.entityName
+                    }
+                });
+            }.bind(this);
+
+            const scheduleAppointment = function (cmd) {
+                this.expectEndTimeAfterStart(cmd);
+                this.expectAppointmentDurationCorrect(cmd);
+                this.expectCorrectNumberOfClients(cmd);
+                this.expectTrainerNotConflicting(cmd);
+                this.expectClientsNotConflicting(cmd);
+
+                this.raiseEvent({
+                    eventName: this.mapCommandToEvent(cmd),
+                    data: {
+                        id: cmd.commandName === 'scheduleAppointment' ? uuid.v4() : cmd.id,
+                        appointmentType: cmd.appointmentType,
+                        date: cmd.date,
+                        startTime: cmd.startTime,
+                        endTime: cmd.endTime,
+                        trainer: cmd.trainer,
+                        trainerName: cmd.trainerName,
+                        clients: cmd.clients,
+                        notes: cmd.notes,
+                        localDate: cmd.entityName
+                    }
+                });
+            }.bind(this);
+
+            const _cancelAppointment = function (cmd) {
+                // put lots of business logic here!
+                this.raiseEvent({
+                    eventName: this.mapCommandToEvent(cmd),
+                    data: {
+                        id: cmd.id
+                    }
+                });
+            }.bind(this);
+
+            return {
+                'rescheduleAppointmentToNewDay': function(cmd) {
+                    if(this._id === cmd.originalEntityName){
+                        _cancelAppointment(cmd);
+                    } else if(this._id === cmd.entityName) {
+                        scheduleAppointment(cmd);
+                    }
+                },
+                'changeAppointmentType': function(cmd) {
+                    updateAppointment(cmd);
+                },
+                'changeAppointmentClients': function(cmd) {
+                    updateAppointment(cmd);
+                },
+                'rescheduleAppointmentTime': function(cmd) {
+                    updateAppointment(cmd);
+                },
+
+                'cancelAppointment': function(cmd) {
+                    _cancelAppointment(cmd);
+                }
+
+            }
+        }
+
+        mapCommandToEvent(cmd) {
+            switch(cmd.commandName){
+                case 'changeAppointmentType':{
+                    return 'appointmentTypeChanged'
+                }
+                case 'changeAppointmentClients':{
+                    return 'clientsChangedForAppointment'
+                }
+                case 'rescheduleAppointmentTime':{
+                    return 'timeChangedForAppointment'
+                }
+                case 'rescheduleAppointmentToNewDay':{
+                    if(this._id === cmd.originalEntityName){
+                        return 'appointmentMovedToDifferentDay';
+                    } else if(this._id === cmd.entityName) {
+                        return 'appointmentMovedFromDifferentDay';
+                    }
+                    break;
+                }
+                case 'cancelAppointment':{
+                    return 'appointmentCanceled'
+                }
+                case 'scheduleAppointment':{
+                    return 'appointmentSchenduled'
+                }
             }
         }
 
         applyEventHandlers() {
-            return {
-                'appointmentScheduled': function (event) {
-                    if(!this._id){
-                        this._id = event.data.localDate;
+            const _appointmentScheduled = function (event) {
+                if(!this._id){
+                    this._id = event.data.localDate;
+                }
+                this.appointments.push({
+                    id: event.data.id,
+                    appointmentType: event.data.appointmentType,
+                    startTime: event.data.startTime,
+                    endTime: event.data.endTime,
+                    trainer: event.data.trainer,
+                    clients: event.data.clients
+                });
+            }.bind(this);
+
+            const appointmentUpdated = function (event) {
+                this.appointments.forEach(x => {
+                    if (x.id === event.data.id) {
+                        x.appointmentType = event.data.appointmentType;
+                        x.startTime = event.data.startTime;
+                        x.endTime = event.data.endTime;
+                        x.trainer = event.data.trainer;
+                        x.clients = event.data.clients;
                     }
-                    this.appointments.push({
-                        id: event.data.id,
-                        appointmentType: event.data.appointmentType,
-                        startTime: event.data.startTime,
-                        endTime: event.data.endTime,
-                        trainer: event.data.trainer,
-                        clients: event.data.clients
-                    });
-                }.bind(this)
+                });
+            }.bind(this);
+
+            const _appointmentCanceled = function (event) {
+                const index = this.appointments.indexOf(x => x.id === event.id);
+                this.appointments.splice(index,1);
+            }.bind(this);
+
+            return {
+                'appointmentMovedFromDifferentDay': function (event) {
+                    _appointmentScheduled(event);
+                },
+                'appointmentScheduled': function (event) {
+                    _appointmentScheduled(event);
+                },
+                'appointmentMovedToDifferentDay': function (event) {
+                    _appointmentCanceled(event);
+                },
+                'appointmentCanceld': function (event) {
+                    _appointmentCanceled(event);
+                },
+                'appointmentTypeChanged': function (event) {
+                    appointmentUpdated(event);
+                },
+                'clientsChangedForAppointment': function (event) {
+                    appointmentUpdated(event);
+                },
+                'timeChangedForAppointment': function (event) {
+                    appointmentUpdated(event);
+                }
             }
-        }
+        };
 
         expectEndTimeAfterStart(cmd) {
             invariant(moment(cmd.endTime).isAfter(moment(cmd.startTime))
