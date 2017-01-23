@@ -128,7 +128,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                     return 'appointmentCanceled'
                 }
                 case 'scheduleAppointment':{
-                    return 'appointmentSchenduled'
+                    return 'appointmentScheduled'
                 }
             }
         }
