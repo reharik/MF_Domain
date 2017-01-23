@@ -30,6 +30,10 @@ module.exports = function(invariant, logger) {
             console.log(eventHandlers);
             console.log(`==========END eventHandlers=========`);
             var key = Object.keys(eventHandlers).find(x => x === event.eventName );
+            console.log(`==========key=========`);
+            console.log(key);
+            console.log(eventHandlers[key]);
+            console.log(`==========END key=========`);
             if (key) {
                 eventHandlers[key](event);
             }
