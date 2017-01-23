@@ -24,7 +24,7 @@ module.exports = function(invariant, logger) {
 
         applyEvent(event) {
             logger.debug(`event currently in applyEvent`);
-            logger.debug(event);
+            logger.debug(JSON.stringify(event));
             var eventHandlers = this.applyEventHandlers();
             var key = Object.keys(eventHandlers).find(x => x === event.eventName );
             if (key) {
