@@ -246,10 +246,10 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
 
         expectTrainerNotConflicting(cmd) {
             var trainerConflict = this.appointments.filter(x=>
-                x.id && x.id !== cmd.id
+                x.id && x.id !== cmd.appointmentId
                 && moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]')
                 ||
-                x.id && x.id !== cmd.id
+                x.id && x.id !== cmd.appointmentId
                 && moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'),'[]')
                 .filter( x=> x.trainer.id === cmd.trainer.id);
             console.log(`==========trainerConflict=========`);
@@ -262,10 +262,10 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
 
         expectClientsNotConflicting(cmd) {
             var clientConflicts = this.appointments.filter(x =>
-            x.id && x.id !== cmd.id
+            x.id && x.id !== cmd.appointmentId
             && moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]')
             ||
-            x.id && x.id !== cmd.id
+            x.id && x.id !== cmd.appointmentId
             && moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]'))
                 .filter(x => x.clients.some(c => cmd.clients.some(c2 => c.id === c2.id)));
             invariant(clientConflicts.length <= 0, `New Appointment conflicts with this Appointment: ${clientConflicts[0] && clientConflicts[0].id} 
