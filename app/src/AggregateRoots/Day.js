@@ -136,7 +136,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         applyEventHandlers() {
             const _appointmentScheduled = function (event) {
                 if(!this._id){
-                    this._id = event.data.localDate;
+                    this._id = event.data.entityName;
                 }
                 this.appointments.push({
                     id: event.data.id,
