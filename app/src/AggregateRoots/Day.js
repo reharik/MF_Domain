@@ -246,8 +246,11 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
 
         expectTrainerNotConflicting(cmd) {
             var trainerConflict = this.appointments.filter(x=>
-                moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]')
-                || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'),'[]')
+                x.id && x.id !== cmd.id
+                && moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]')
+                ||
+                x.id && x.id !== cmd.id
+                && moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'),'[]')
                 .filter( x=> x.trainer.id === cmd.trainer.id);
             invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0] && trainerConflict[0].id} 
                 for this trainer: ${cmd.trainer}.`);
@@ -255,8 +258,11 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
 
         expectClientsNotConflicting(cmd) {
             var clientConflicts = this.appointments.filter(x =>
-            moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]')
-            || moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]'))
+            x.id && x.id !== cmd.id
+            && moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]')
+            ||
+            x.id && x.id !== cmd.id
+            && moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]'))
                 .filter(x => x.clients.some(c => cmd.clients.some(c2 => c.id === c2.id)));
             invariant(clientConflicts.length <= 0, `New Appointment conflicts with this Appointment: ${clientConflicts[0] && clientConflicts[0].id} 
                 for at least one client.`);
