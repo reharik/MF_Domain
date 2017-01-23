@@ -252,6 +252,10 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 x.id && x.id !== cmd.id
                 && moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'),'[]')
                 .filter( x=> x.trainer.id === cmd.trainer.id);
+            console.log(`==========trainerConflict=========`);
+            console.log(cmd);
+            console.log(trainerConflict);
+            console.log(`==========END trainerConflict=========`);
             invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0] && trainerConflict[0].id} 
                 for this trainer: ${cmd.trainer}.`);
         }
