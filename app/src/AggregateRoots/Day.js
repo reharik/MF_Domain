@@ -173,6 +173,10 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                     _appointmentScheduled(event);
                 },
                 'appointmentScheduled': function (event) {
+                    console.log(`==========_appointmentScheduled=========`);
+                    console.log(_appointmentScheduled);
+                    console.log(this._appointmentScheduled);
+                    console.log(`==========END _appointmentScheduled=========`);
                     _appointmentScheduled(event);
                 },
                 'appointmentMovedToDifferentDay': function (event) {
