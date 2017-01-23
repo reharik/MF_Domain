@@ -8,7 +8,6 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         constructor() {
             super();
             this._password = undefined;
-            this._loggedIn = false;
             this._isArchived = false;
             this.type = 'Trainer';
         }
@@ -60,20 +59,20 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                     });
                 },
 
-                'loginTrainer'  : function(cmd) {
-                    this.expectNotLoggedIn();
-                    this.expectCorrectPassword(cmd.password);
-                    var token = this.createToken();
-                    this.raiseEvent({
-                        eventName: 'trainerLoggedIn',
-                        data     : {
-                            id      : this._id,
-                            userName: cmd.userName,
-                            token   : token,
-                            created : new Date()
-                        }
-                    });
-                },
+                // 'loginTrainer'  : function(cmd) {
+                //     this.expectNotLoggedIn();
+                //     this.expectCorrectPassword(cmd.password);
+                //     var token = this.createToken();
+                //     this.raiseEvent({
+                //         eventName: 'trainerLoggedIn',
+                //         data     : {
+                //             id      : this._id,
+                //             userName: cmd.userName,
+                //             token   : token,
+                //             created : new Date()
+                //         }
+                //     });
+                // },
                 'archiveTrainer': function(cmd) {
                     this.expectNotArchived();
                     this.raiseEvent({
@@ -133,9 +132,9 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
             invariant(password === this._password, 'Incorrect credentials');
         }
 
-        expectNotLoggedIn() {
-            invariant(!this._loggedIn, 'Trainer already logged in');
-        }
+        // expectNotLoggedIn() {
+        //     invariant(!this._loggedIn, 'Trainer already logged in');
+        // }
 
         expectNotArchived() {
             invariant(!this._isArchived, 'Trainer already archived');

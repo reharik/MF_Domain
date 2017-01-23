@@ -29,7 +29,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 this.raiseEvent({
                     eventName: this.mapCommandToEvent(cmd),
                     data: {
-                        id: cmd.id,
+                        id: cmd.appointmentId,
                         appointmentType: cmd.appointmentType,
                         date: cmd.date,
                         startTime: cmd.startTime,
@@ -53,7 +53,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 this.raiseEvent({
                     eventName: this.mapCommandToEvent(cmd),
                     data: {
-                        id: cmd.commandName === 'scheduleAppointment' ? uuid.v4() : cmd.id,
+                        id: cmd.commandName === 'scheduleAppointment' ? uuid.v4() : cmd.appointmentId,
                         appointmentType: cmd.appointmentType,
                         date: cmd.date,
                         startTime: cmd.startTime,
