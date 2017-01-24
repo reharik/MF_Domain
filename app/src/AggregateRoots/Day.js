@@ -50,10 +50,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 this.expectCorrectNumberOfClients(cmd);
                 this.expectTrainerNotConflicting(cmd);
                 this.expectClientsNotConflicting(cmd);
-console.log(`==========this.mapCommandToEvent(cmd)=========`);
-                console.log(cmd);
-                console.log(this.mapCommandToEvent(cmd));
-console.log(`==========END this.mapCommandToEvent(cmd)=========`);
                 this.raiseEvent({
                     eventName: this.mapCommandToEvent(cmd),
                     data: {
@@ -88,7 +84,7 @@ console.log(`==========END this.mapCommandToEvent(cmd)=========`);
                 'rescheduleAppointmentToNewDay': function(cmd) {
                     if(this._id === cmd.originalEntityName){
                         _cancelAppointment(cmd);
-                    } else if(this._id === cmd.entityName) {
+                    } else if(!this._id || this._id === cmd.entityName) {
                         scheduleAppointment(cmd);
                     }
                 },
