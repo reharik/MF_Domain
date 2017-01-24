@@ -39,7 +39,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                         trainerName: cmd.trainerName,
                         clients: cmd.clients,
                         notes: cmd.notes,
-                        localDate: cmd.entityName
+                        entityName: cmd.entityName
                     }
                 });
             }.bind(this);
@@ -65,7 +65,7 @@ console.log(`==========END this.mapCommandToEvent(cmd)=========`);
                         trainerName: cmd.trainerName,
                         clients: cmd.clients,
                         notes: cmd.notes,
-                        localDate: cmd.entityName
+                        entityName: cmd.entityName
                     }
                 });
             }.bind(this);
@@ -142,7 +142,7 @@ console.log(`==========END this.mapCommandToEvent(cmd)=========`);
                 console.log(event);
                 console.log(`==========END event=========`);
                 if(!this._id){
-                    this._id = event.data.localDate;
+                    this._id = event.data.entityName;
                 }
                 this.appointments.push({
                     id: event.data.id,

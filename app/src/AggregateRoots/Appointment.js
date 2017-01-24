@@ -28,7 +28,7 @@ module.exports = function (AggregateRootBase, invariant, uuid, moment) {
               trainer: cmd.appt.trainer,
               clients: cmd.appt.clients,
               notes: cmd.appt.notes,
-              localDate: cmd.id
+              entityName: cmd.id
             }
           });
         }
