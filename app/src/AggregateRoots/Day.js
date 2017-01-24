@@ -122,7 +122,7 @@ console.log(`==========END this.mapCommandToEvent(cmd)=========`);
                 case 'rescheduleAppointmentToNewDay':{
                     if(this._id === cmd.originalEntityName){
                         return 'appointmentMovedToDifferentDay';
-                    } else if(this._id === cmd.entityName) {
+                    } else if(!this._id || this._id === cmd.entityName) {
                         return 'appointmentMovedFromDifferentDay';
                     }
                     break;
