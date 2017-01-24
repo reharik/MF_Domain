@@ -4,6 +4,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             super();
             this.type = 'Day';
             this.appointments = [];
+            this._id;
         }
 
         static aggregateName() {
