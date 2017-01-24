@@ -50,7 +50,10 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 this.expectCorrectNumberOfClients(cmd);
                 this.expectTrainerNotConflicting(cmd);
                 this.expectClientsNotConflicting(cmd);
-
+console.log(`==========this.mapCommandToEvent(cmd)=========`);
+                console.log(cmd);
+                console.log(this.mapCommandToEvent(cmd));
+console.log(`==========END this.mapCommandToEvent(cmd)=========`);
                 this.raiseEvent({
                     eventName: this.mapCommandToEvent(cmd),
                     data: {
