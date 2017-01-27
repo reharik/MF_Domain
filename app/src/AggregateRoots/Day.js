@@ -4,7 +4,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             super();
             this.type = 'Day';
             this.appointments = [];
-            this._id;
         }
 
         static aggregateName() {
@@ -50,9 +49,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 this.expectCorrectNumberOfClients(cmd);
                 this.expectTrainerNotConflicting(cmd);
                 this.expectClientsNotConflicting(cmd);
-console.log(`==========this.mapCommandToEvent(cmd)=========`);
-console.log(this.mapCommandToEvent(cmd));
-console.log(`==========END this.mapCommandToEvent(cmd)=========`);
                 this.raiseEvent({
                     eventName: this.mapCommandToEvent(cmd),
                     data: {
@@ -176,10 +172,6 @@ console.log(`==========END this.mapCommandToEvent(cmd)=========`);
                     _appointmentScheduled(event);
                 },
                 'appointmentScheduled': function (event) {
-                    console.log(`==========_appointmentScheduled=========`);
-                    console.log(_appointmentScheduled);
-                    console.log(this._appointmentScheduled);
-                    console.log(`==========END _appointmentScheduled=========`);
                     _appointmentScheduled(event);
                 },
                 'appointmentMovedToDifferentDay': function (event) {
@@ -255,10 +247,6 @@ console.log(`==========END this.mapCommandToEvent(cmd)=========`);
                 x.id && x.id !== cmd.appointmentId
                 && moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'),'[]')
                 .filter( x=> x.trainer.id === cmd.trainer.id);
-            console.log(`==========trainerConflict=========`);
-            console.log(cmd);
-            console.log(trainerConflict);
-            console.log(`==========END trainerConflict=========`);
             invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0] && trainerConflict[0].id} 
                 for this trainer: ${cmd.trainer}.`);
         }
