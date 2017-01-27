@@ -88,7 +88,13 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 'changeAppointmentType': function(cmd) {
                     updateAppointment(cmd);
                 },
+                'updateNotesForAppointment': function(cmd) {
+                    updateAppointment(cmd);
+                },
                 'changeAppointmentClients': function(cmd) {
+                    updateAppointment(cmd);
+                },
+                'changeAppointmentTrainer': function(cmd) {
                     updateAppointment(cmd);
                 },
                 'rescheduleAppointmentTime': function(cmd) {
@@ -110,8 +116,14 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 case 'changeAppointmentClients':{
                     return 'clientsChangedForAppointment'
                 }
+                case 'changeAppointmentTrainer':{
+                    return 'trainerChangedForAppointment'
+                }
                 case 'rescheduleAppointmentTime':{
                     return 'timeChangedForAppointment'
+                }
+                case 'updateNotesForAppointment': {
+                    return 'notesForAppointmentUpdated'
                 }
                 case 'rescheduleAppointmentToNewDay':{
                     if(this._id === cmd.originalEntityName){
@@ -132,9 +144,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
 
         applyEventHandlers() {
             const _appointmentScheduled = function (event) {
-                console.log(`==========event=========`);
-                console.log(event);
-                console.log(`==========END event=========`);
                 if(!this._id){
                     this._id = event.data.entityName;
                 }
@@ -184,7 +193,13 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 'clientsChangedForAppointment': function (event) {
                     appointmentUpdated(event);
                 },
+                'trainerChangedForAppointment': function (event) {
+                    appointmentUpdated(event);
+                },
                 'timeChangedForAppointment': function (event) {
+                    appointmentUpdated(event);
+                },
+                'notesForAppointmentUpdated': function (event) {
                     appointmentUpdated(event);
                 }
             }
