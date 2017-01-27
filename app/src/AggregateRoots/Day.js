@@ -35,7 +35,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                         startTime: cmd.startTime,
                         endTime: cmd.endTime,
                         trainer: cmd.trainer,
-                        trainerName: cmd.trainerName,
                         clients: cmd.clients,
                         notes: cmd.notes,
                         entityName: cmd.entityName
@@ -58,7 +57,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                         startTime: cmd.startTime,
                         endTime: cmd.endTime,
                         trainer: cmd.trainer,
-                        trainerName: cmd.trainerName,
                         clients: cmd.clients,
                         notes: cmd.notes,
                         entityName: cmd.entityName
@@ -246,7 +244,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 ||
                 x.id && x.id !== cmd.appointmentId
                 && moment(x.endTime).isBetween(cmd.startTime, cmd.endTime, 'minutes'),'[]')
-                .filter( x=> x.trainer.id === cmd.trainer.id);
+                .filter( x=> x.trainer === cmd.trainer);
             invariant(trainerConflict.length <= 0, `New Appointment conflicts with this Appointment: ${trainerConflict[0] && trainerConflict[0].id} 
                 for this trainer: ${cmd.trainer}.`);
         }
