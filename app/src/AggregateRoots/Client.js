@@ -20,10 +20,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                 'addClient'   : function(cmd) {
                     this.raiseEvent({
                         eventName     : 'clientAdded',
-                        data          : {
-                            id         : uuid.v4(),
-                            contact    : cmd.contact,
-                        }
+                        data          : cmd
                     });
                 },
                 'updateClientInfo'   : function(cmd) {
