@@ -66,6 +66,17 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
 
             const _cancelAppointment = function (cmd) {
                 // put lots of business logic here!
+                console.log('==========cmd in cancel appointment command handler=========');
+                console.log(cmd);
+                console.log('==========END cmd=========');
+                console.log('=========={ =========');
+                console.log({
+                    eventName: this.mapCommandToEvent(cmd),
+                        data: {
+                        id: cmd.appointmentId
+                    }
+                });
+                console.log('==========END =========');
                 this.raiseEvent({
                     eventName: this.mapCommandToEvent(cmd),
                     data: {
@@ -170,11 +181,14 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             }.bind(this);
 
             const _appointmentCanceled = function (event) {
-                console.log('==========event=========');
+                console.log('==========event appointment canceled=========');
                 console.log(event);
                 console.log('==========END event=========');
                 const index = this.appointments.indexOf(x => x.id === event.id);
                 this.appointments.splice(index,1);
+                console.log('==========this.appointments=after splice========');
+                console.log(this.appointments);
+                console.log('==========END this.appointments=========');
             }.bind(this);
 
             return {
