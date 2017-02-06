@@ -171,9 +171,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
 
             const _appointmentCanceled = function (event) {
                 this.appointments = this.appointments.filter(x=> x.id !== event.id)
-                console.log('==========this.appointments=========');
-                console.log(this.appointments);
-                console.log('==========END this.appointments=========');
             }.bind(this);
 
             return {
@@ -186,7 +183,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 'appointmentMovedToDifferentDay': function (event) {
                     _appointmentCanceled(event);
                 },
-                'appointmentCanceld': function (event) {
+                'appointmentCanceled': function (event) {
                     _appointmentCanceled(event);
                 },
                 'appointmentTypeChanged': function (event) {
@@ -255,9 +252,6 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
         }
 
         expectTrainerNotConflicting(cmd) {
-            console.log('==========this.appointments=========');
-            console.log(this.appointments);
-            console.log('==========END this.appointments=========');
             var trainerConflict = this.appointments.filter(x=>
                 x.id && x.id !== cmd.appointmentId
                 && moment(x.startTime).isBetween(cmd.startTime, cmd.endTime, 'minutes','[]')
