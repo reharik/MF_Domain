@@ -69,7 +69,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 this.raiseEvent({
                     eventName: this.mapCommandToEvent(cmd),
                     data: {
-                        id: cmd.id
+                        id: cmd.appointmentId
                     }
                 });
             }.bind(this);
