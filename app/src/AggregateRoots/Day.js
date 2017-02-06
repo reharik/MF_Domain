@@ -170,8 +170,7 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
             }.bind(this);
 
             const _appointmentCanceled = function (event) {
-                const index = this.appointments.indexOf(x => x.id === event.id);
-                this.appointments.splice(index,1);
+                this.appointments = this.appointments.filter(x=> x.id !== event.id)
             }.bind(this);
 
             return {
