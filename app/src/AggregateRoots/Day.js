@@ -171,6 +171,10 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
 
             const _appointmentCanceled = function (event) {
                 this.appointments = this.appointments.filter(x=> x.id !== event.id)
+                console.log('==========event.id=========');
+                console.log(event.id);
+                console.log(this.appointments);
+                console.log('==========END event.id=========');
             }.bind(this);
 
             return {
