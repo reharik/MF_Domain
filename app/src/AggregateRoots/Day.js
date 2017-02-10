@@ -48,10 +48,12 @@ module.exports = function(AggregateRootBase, invariant, uuid, moment) {
                 this.expectCorrectNumberOfClients(cmd);
                 this.expectTrainerNotConflicting(cmd);
                 this.expectClientsNotConflicting(cmd);
+                var id = cmd.commandName === 'scheduleAppointment' || cmd.commandName === 'rescheduleAppointmentToNewDay'
+                  ? uuid.v4() : cmd.appointmentId;
                 this.raiseEvent({
                     eventName: this.mapCommandToEvent(cmd),
                     data: {
-                        id: cmd.commandName === 'scheduleAppointment' ? uuid.v4() : cmd.appointmentId,
+                        id,
                         appointmentType: cmd.appointmentType,
                         date: cmd.date,
                         startTime: cmd.startTime,
