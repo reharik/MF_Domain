@@ -19,15 +19,10 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         commandHandlers() {
             return {
                 'hireTrainer'   : function(cmd) {
+                    cmd.id = uuid.v4();
                     this.raiseEvent({
                         eventName     : 'trainerHired',
-                        data          : {
-                            id         : uuid.v4(),
-                            credentials: cmd.credentials,
-                            contact    : cmd.contact,
-                            dob        : cmd.dob,
-                            color      : cmd.color
-                        }
+                        data          : cmd
                     });
                 },
                 'updateTrainerInfo'   : function(cmd) {
