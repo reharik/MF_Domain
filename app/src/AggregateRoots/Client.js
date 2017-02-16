@@ -18,7 +18,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
         commandHandlers() {
             return {
                 'addClient'   : function(cmd) {
-                    cmd.id = uuid.v4();
+                    cmd.id = cmd.id || uuid.v4();
                     this.raiseEvent({
                         eventName     : 'clientAdded',
                         data          : cmd
