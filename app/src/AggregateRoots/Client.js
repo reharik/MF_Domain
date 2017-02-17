@@ -31,6 +31,13 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                         data          : cmd
                     });
                 },
+                'updateClientSource'   : function(cmd) {
+                    this.expectNotArchived();
+                    this.raiseEvent({
+                        eventName     : 'clientSourceUpdated',
+                        data          : cmd
+                    });
+                },
                 'updateClientContact'   : function(cmd) {
                     this.expectNotArchived();
                     this.raiseEvent({
