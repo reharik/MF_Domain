@@ -81,7 +81,7 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                 'unArchiveUser' : function(cmd) {
                     this.expectArchived();
                     this.raiseEvent({
-                        eventName: 'trainerUnarchived',
+                        eventName: 'trainerUnArchived',
                         data     : {
                             id            : this._id,
                             unArchivedDate: new Date()
@@ -109,11 +109,11 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                     this._password = event.data.password;
                 }.bind(this),
 
-                'userArchived': function(event) {
+                'trainerArchived': function(event) {
                     this._isArchived = true;
                 }.bind(this),
 
-                'userUnarchived': function(event) {
+                'trainerUnArchived': function(event) {
                     this._isArchived = false;
                 }.bind(this)
             }

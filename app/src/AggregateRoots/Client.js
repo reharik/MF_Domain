@@ -62,10 +62,10 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                         }
                     });
                 },
-                'unArchiveUser' : function(cmd) {
+                'unArchiveClient' : function(cmd) {
                     this.expectArchived();
                     this.raiseEvent({
-                        eventName: 'clientUnarchived',
+                        eventName: 'clientUnArchived',
                         data     : {
                             id            : this._id,
                             unArchivedDate: new Date()
@@ -81,11 +81,11 @@ module.exports = function(AggregateRootBase, invariant, uuid) {
                     this._id       = event.data.id;
                 }.bind(this),
 
-                'userArchived': function(event) {
+                'clientArchived': function(event) {
                     this._isArchived = true;
                 }.bind(this),
 
-                'userUnarchived': function(event) {
+                'clientUnArchived': function(event) {
                     this._isArchived = false;
                 }.bind(this)
             }
